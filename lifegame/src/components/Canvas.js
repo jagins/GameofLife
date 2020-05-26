@@ -42,7 +42,7 @@ function Canvas()
         drawGrid(ctx);
     })
     return (
-        <div>
+        <div className='canvasDiv'>
             <canvas
                 ref={canvasRef}
                 width='600px'
@@ -53,13 +53,15 @@ function Canvas()
                     fillBox(ctx, event);
                 }}
             />
-            <button>Start</button>
-            <button>Stop</button>
-            <button onClick={() => {
-                const canvas = canvasRef.current;
-                const ctx = canvas.getContext('2d');
-                drawGrid(ctx);
-            }}>Reset</button>
+            <div className='button-container'>
+                <button>Start</button>
+                <button>Stop</button>
+                <button onClick={() => {
+                    const canvas = canvasRef.current;
+                    const ctx = canvas.getContext('2d');
+                    drawGrid(ctx);
+                }}>Reset</button>
+            </div>
         </div>
     );
 }
