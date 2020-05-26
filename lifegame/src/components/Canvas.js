@@ -18,13 +18,21 @@ function Canvas()
                 const x = column * 20;
                 const y = row * 20;
 
-                ctx.rect(x,y,20,20);
+                ctx.rect(x, y, 20, 20);
                 ctx.fill();
                 ctx.stroke();
             }
         }
 
         ctx.closePath();
+    }
+
+    const fillBox = (ctx, event) =>
+    {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(Math.floor(event.nativeEvent.offsetX / 20) * 20, 
+        Math.floor(event.nativeEvent.offsetY / 20) * 20,
+        20, 20);
     }
 
     useEffect(() =>
@@ -38,6 +46,11 @@ function Canvas()
         ref={canvasRef}
         width='600px'
         height='600px'
+        onClick={(event) => {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            fillBox(ctx, event);
+        }}
        />
     );
 }
