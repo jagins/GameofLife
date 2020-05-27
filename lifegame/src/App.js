@@ -8,7 +8,6 @@ function App()
   return (
     <div className="App">
       <h1>Conway's Game of Life</h1>
-      <h3>Generation: #</h3>
       <Canvas/>
       <Rules/>
     </div>

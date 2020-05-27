@@ -1,8 +1,9 @@
-import React, {useRef,useEffect} from 'react';
+import React, {useRef,useEffect, useState} from 'react';
 
 function Canvas()
 {
     const canvasRef = useRef(null);
+    const [generation, setGeneration] = useState(0);
 
     const drawGrid = (ctx) =>
     {
@@ -43,10 +44,11 @@ function Canvas()
     })
     return (
         <div className='canvasDiv'>
+            <h3>Generation: {generation}</h3>
             <canvas
                 ref={canvasRef}
-                width='600px'
-                height='600px'
+                width='500px'
+                height='500px'
                 onClick={(event) => {
                     const canvas = canvasRef.current;
                     const ctx = canvas.getContext('2d');
