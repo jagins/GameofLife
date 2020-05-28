@@ -1,23 +1,28 @@
 export function sketch(p)
 {
+    //start flag for the start button
     let isStart = false;
 
+    //global variables
     let grid;
     let cols;
     let rows;
     let resolution = 20;
     let generation = 0;
     
+    //sets the start flag to true
     const startSketch = () => 
     {
         isStart = true;
     }
 
+    //resets the start flag to stop the simulation
     const stopSketch = () => 
     {
         isStart = false;
     }
 
+    //resets the simulation
     const reset = () => 
     {
         isStart = false;
@@ -27,6 +32,7 @@ export function sketch(p)
         cols = p.width / resolution;
         rows = p.height / resolution;
 
+        //creates a 2d array and fills it in with random 0's and 1's
         grid = create2dArray(cols, rows);
         for (let i = 0; i < cols; i++) 
         {
@@ -49,26 +55,39 @@ export function sketch(p)
 
     p.setup = () => 
     {
+        //creates the canvas
         p.createCanvas(600, 600);
+
+        //create dom element buttons
         const startButton = p.createButton('Start');
         const stopButton = p.createButton('Stop');
         const resetButton = p.createButton('Reset');
         const paragraph = p.createP(`Generation: ${generation}`)
+
+        //calls the functions when the button is pressed
         startButton.mousePressed(startSketch);
         stopButton.mousePressed(stopSketch);
         resetButton.mousePressed(reset);
+        
+        //initatiate the 2d grid using the reset function
         reset();
+
+        //runs the simulation
         runSimulation();
     }
 
     p.draw = () => 
     {
+        //background color to black
         p.background(0);
         const selp = p.select('p');
+        
+        //draws the grid and fills in the square to white if the value inside is 1
         for (let i = 0; i < cols; i++) 
         {
             for (let j = 0; j < rows; j++) 
             {
+                //resolution is how big the square is
                 let x = i * resolution;
                 let y = j * resolution;
 
@@ -81,6 +100,7 @@ export function sketch(p)
             }
         }
 
+        //if the start button is pressed start the sim
         if (isStart) 
         {
             runSimulation();
@@ -88,6 +108,7 @@ export function sketch(p)
         }
     }
 
+    //counts the neighbors to use the rules
     const countNeighbors = (grid, x, y) => 
     {
         let sum = 0;
@@ -95,6 +116,7 @@ export function sketch(p)
         {
             for (let j = -1; j < 2; j++) 
             {
+                //calucate the wrap around for the edges to determine if it's a 0 or 1
                 let col = (x + i + cols) % cols;
                 let row = (y + j + rows) % rows;
                 sum += grid[col][row];
@@ -149,7 +171,7 @@ export function sketch(p)
                 }
             }
         }
-
+        //swap to the next iteration of the grid
         grid = next;
     }
 
