@@ -53,6 +53,22 @@ export function sketch(p) {
     p.draw = () => {
         p.background(0);
         const selp = p.select('p');
+        for (let i = 0; i < cols; i++) 
+        {
+            for (let j = 0; j < rows; j++) 
+            {
+                let x = i * resolution;
+                let y = j * resolution;
+                
+                if (grid[i][j] === 1) 
+                {
+                    p.fill(255);
+                    p.stroke(0);
+                    p.rect(x, y, resolution - 1, resolution - 1);
+                }
+            }
+        }
+
         if (isStart) {
             runSimulation();
             selp.html(`Generation: ${generation}`);
