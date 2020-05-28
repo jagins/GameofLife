@@ -24,18 +24,3 @@ h1, h3
 {
   text-align: center;
 }
-
-.button-container
-{
-  width: 45%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.button-container button
-{
-  padding: 2%;
-  border-radius: 5px;
-}
