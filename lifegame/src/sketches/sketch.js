@@ -1,14 +1,25 @@
-export function sketch(p) {
+export function sketch(p)
+{
     let isStart = false;
-    const startSketch = () => {
+
+    let grid;
+    let cols;
+    let rows;
+    let resolution = 20;
+    let generation = 0;
+    
+    const startSketch = () => 
+    {
         isStart = true;
     }
 
-    const stopSketch = () => {
+    const stopSketch = () => 
+    {
         isStart = false;
     }
 
-    const reset = () => {
+    const reset = () => 
+    {
         isStart = false;
         generation = 0;
         const selp = p.select('p');
@@ -17,27 +28,27 @@ export function sketch(p) {
         rows = p.height / resolution;
 
         grid = create2dArray(cols, rows);
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) 
+        {
+            for (let j = 0; j < rows; j++) 
+            {
                 grid[i][j] = p.floor(p.random(2));
             }
         }
     }
-    const create2dArray = (cols, rows) => {
+
+    const create2dArray = (cols, rows) => 
+    {
         let arr = new Array(cols);
-        for (let i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr.length; i++) 
+        {
             arr[i] = new Array(rows);
         }
         return arr;
     }
 
-    let grid;
-    let cols;
-    let rows;
-    let resolution = 20;
-    let generation = 0;
-
-    p.setup = () => {
+    p.setup = () => 
+    {
         p.createCanvas(600, 600);
         const startButton = p.createButton('Start');
         const stopButton = p.createButton('Stop');
@@ -50,7 +61,8 @@ export function sketch(p) {
         runSimulation();
     }
 
-    p.draw = () => {
+    p.draw = () => 
+    {
         p.background(0);
         const selp = p.select('p');
         for (let i = 0; i < cols; i++) 
@@ -59,7 +71,7 @@ export function sketch(p) {
             {
                 let x = i * resolution;
                 let y = j * resolution;
-                
+
                 if (grid[i][j] === 1) 
                 {
                     p.fill(255);
@@ -69,7 +81,8 @@ export function sketch(p) {
             }
         }
 
-        if (isStart) {
+        if (isStart) 
+        {
             runSimulation();
             selp.html(`Generation: ${generation}`);
         }
@@ -95,41 +108,49 @@ export function sketch(p) {
 
     const runSimulation = () =>
     {
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) 
+        {
+            for (let j = 0; j < rows; j++) 
+            {
                 let x = i * resolution;
                 let y = j * resolution;
 
                 if (grid[i][j] === 1) {
                     p.fill(255);
                     p.stroke(0);
-                    p.rect(x, y, resolution - 1, resolution - 1);
+                    p.rect(x, y, resolution, resolution);
                 }
             }
+            
         }
 
         let next = create2dArray(cols, rows);
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) 
+        {
+            for (let j = 0; j < rows; j++) 
+            {
                 let state = grid[i][j];
 
-                let sum = 0;
                 let neighbors = countNeighbors(grid, i, j);
-                if (state === 0 && neighbors === 3) {
+
+                //rules
+                if (state === 0 && neighbors === 3) 
+                {
                     next[i][j] = 1;
+                    generation++;
                 }
-                else if (state === 1 && (neighbors < 2 || neighbors > 3)) {
+                else if (state === 1 && (neighbors < 2 || neighbors > 3)) 
+                {
                     next[i][j] = 0
                 }
-                else {
+                else 
+                {
                     next[i][j] = state;
                 }
             }
         }
 
         grid = next;
-        generation++;
     }
-
 
 }
